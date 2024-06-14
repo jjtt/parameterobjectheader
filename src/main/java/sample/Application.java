@@ -2,6 +2,7 @@ package sample;
 
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.enums.ParameterIn;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springdoc.core.annotations.ParameterObject;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -19,14 +20,17 @@ public class Application {
   public static class HelloController {
     @GetMapping("/")
     public String index(
-            @ParameterObject Params params
+            @ParameterObject Params params,
+            HttpServletRequest request
     ) {
       return String.format("""
                       Hello, %s!
                       You sent the header: %s
+                      Actual header value: %s
                       """,
               params.testparam,
-              params.testheader);
+              params.testheader,
+              request.getHeader("testheader"));
     }
   }
 

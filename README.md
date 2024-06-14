@@ -17,10 +17,12 @@ Expected output:
 ```
 Hello, param-value!
 You sent the header: header-value
+Actual header value: header-value
 ```
 
 Actual output:
 ```
 Hello, param-value!
 You sent the header: null
+Actual header value: header-value
 ```
