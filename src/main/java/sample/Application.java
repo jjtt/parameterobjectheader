@@ -9,6 +9,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.Objects;
+
 @SpringBootApplication
 public class Application {
   public static void main(String[] args) {
@@ -33,21 +35,58 @@ public class Application {
     }
   }
 
-  public record Params(
-          @Parameter(
-                  in = ParameterIn.HEADER,
-                  name = "testheader",
-                  description = "a header",
-                  example = "header-value",
-                  required = true)
-          String testheader,
+  public static final class Params {
+    @Parameter(
+            in = ParameterIn.HEADER,
+            name = "testheader",
+            description = "a header",
+            example = "header-value",
+            required = true)
+    private final String testheader;
+    @Parameter(
+            name = "testparam",
+            description = "a parameter",
+            example = "param-value",
+            required = true)
+    private final String testparam;
 
-          @Parameter(
-                  name = "testparam",
-                  description = "a parameter",
-                  example = "param-value",
-                  required = true)
-          String testparam
-  ) {
+    public Params(
+            String testheader,
+            String testparam
+    ) {
+      this.testheader = testheader;
+      this.testparam = testparam;
+    }
+
+    public String getTestheader() {
+      return testheader;
+    }
+
+    public String getTestparam() {
+      return testparam;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+      if (obj == this) return true;
+      if (obj == null || obj.getClass() != this.getClass()) return false;
+      var that = (Params) obj;
+      return Objects.equals(this.testheader, that.testheader) &&
+             Objects.equals(this.testparam, that.testparam);
+    }
+
+    @Override
+    public int hashCode() {
+      return Objects.hash(testheader, testparam);
+    }
+
+    @Override
+    public String toString() {
+      return "Params[" +
+             "testheader=" + testheader + ", " +
+             "testparam=" + testparam + ']';
+    }
+
+
   }
 }
