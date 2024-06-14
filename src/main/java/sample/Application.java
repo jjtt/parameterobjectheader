@@ -42,13 +42,13 @@ public class Application {
             description = "a header",
             example = "header-value",
             required = true)
-    private final String testheader;
+    private String testheader;
     @Parameter(
             name = "testparam",
             description = "a parameter",
             example = "param-value",
             required = true)
-    private final String testparam;
+    private String testparam;
 
     public Params(
             String testheader,
@@ -62,8 +62,16 @@ public class Application {
       return testheader;
     }
 
+    public void setTestheader(String testheader) {
+      this.testheader = testheader;
+    }
+
     public String getTestparam() {
       return testparam;
+    }
+
+    public void setTestparam(String testparam) {
+      this.testparam = testparam;
     }
 
     @Override
